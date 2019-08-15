@@ -18,7 +18,9 @@ static int hour = 0;
 static int levels[24];
 bool arrayTime = false;
 
-Timer timer(1000, sendAzure);
+const int INTERVAL = 10000;
+
+Timer timer(INTERVAL, sendAzure);
 void sendAzure(){
     arrayTime = true;
 }
