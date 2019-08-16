@@ -10,10 +10,10 @@ void workLeds(int level);
 void myHandler(const char *event, const char *data);
 
 // Define your Button & LED pin configuration here
-int button = D0;
-int RED = D1;
-int BLUE = D2;
-int GREEN = D3;
+int button = D2;
+int RED = D3;
+int BLUE = D4;
+int GREEN = D5;
 
 static int brightness = 0;
 static int hour = 0;
