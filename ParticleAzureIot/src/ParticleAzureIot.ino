@@ -18,7 +18,9 @@ static int hour = 0;
 static int levels[24];
 bool arrayTime = false;
 
-const int INTERVAL = 10000;
+const int INTERVAL = 1000;
+
+bool firstDay = true;
 
 Timer timer(INTERVAL, sendAzure);
 void sendAzure(){
@@ -56,6 +58,7 @@ void loop() {
 
       if(hour == 24){
         hour = 0;
+        firstDay = false;
 
         Serial.printf("Sending to Particle Console: %s\n", str);
         Particle.publish("dataSetFull", str, PRIVATE);
@@ -64,7 +67,9 @@ void loop() {
 
       char hourToString[10];
       sprintf(hourToString, "%d", hour);
-      Particle.publish("getPrediction", hourToString, PRIVATE);
+
+      if(!firstDay)
+        Particle.publish("getPrediction", hourToString, PRIVATE);
     }
 
     if(digitalRead(button) == HIGH){
@@ -97,7 +102,12 @@ void myHandler(const char *event, const char *data) {
   int level = atoi(result);
 
   Serial.printf("[%d] - Brightness Predict: %d\n", hour, level);
-  //workLeds(brightness);
+
+  if(abs(brightness-level) > 1){}
+  else{
+    brightness = level;
+    workLeds(brightness);
+  }
 }
 
 void workLeds(int level){
